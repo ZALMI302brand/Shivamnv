@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase.js"></script>
+</head>
+<body>
+
+<h2>Admin Panel - Bookings</h2>
+<div id="list"></div>
+
+<script>
+db.collection("bookings").onSnapshot(snapshot=>{
+  let html = "";
+  snapshot.forEach(doc=>{
+    let d = doc.data();
+    html += `
+      <div style="border:1px solid black;margin:10px;padding:10px">
+        <p>${d.name} | ${d.vehicle}</p>
+        <p>${d.date} ${d.time}</p>
+        <button onclick="update('${doc.id}','Approved')">Approve</button>
+        <button onclick="update('${doc.id}','Rejected')">Reject</button>
+      </div>
+    `;
+  });
+  list.innerHTML = html;
+});
+
+function update(id,status){
+  db.collection("bookings").doc(id).update({status: status});
+}
+</script>
+
+</body>
+</html>
