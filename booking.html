@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Booking</title>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="firebase.js"></script>
+</head>
+<body>
+
+<h2>बुकिंग फॉर्म</h2>
+
+<form id="form">
+  <input type="text" id="name" placeholder="नाम" required><br><br>
+  <input type="text" id="mobile" placeholder="मोबाइल नंबर" required><br><br>
+  <input type="text" id="vehicle" placeholder="वाहन नंबर" required><br><br>
+
+  <select id="type">
+    <option>2 Wheeler</option>
+    <option>3 Wheeler</option>
+    <option>4 Wheeler</option>
+    <option>Commercial</option>
+  </select><br><br>
+
+  <input type="date" id="date" required><br><br>
+  <input type="time" id="time" required><br><br>
+
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+document.getElementById("form").addEventListener("submit", async (e)=>{
+  e.preventDefault();
+
+  await db.collection("bookings").add({
+    name: name.value,
+    mobile: mobile.value,
+    vehicle: vehicle.value,
+    type: type.value,
+    date: date.value,
+    time: time.value,
+    status: "Pending"
+  });
+
+  alert("Booking Saved!");
+});
+</script>
+
+</body>
+</html>
